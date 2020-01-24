@@ -16,7 +16,6 @@ public class Analyser {
         writer.append(message).append(" :\t\t");
         writer.append(stringDate);
         writer.newLine();
-        System.out.println(stringDate);
         writer.close();
     }
 
