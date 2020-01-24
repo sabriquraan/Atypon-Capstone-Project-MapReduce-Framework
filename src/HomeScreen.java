@@ -211,14 +211,16 @@ public class HomeScreen   {
 
     }
     public static void startButtonFunction() throws IOException, InterruptedException {
-
+        long startTime = System.currentTimeMillis();
         status.setText("Working");
         status.setTextFill(Color.BLUE);
         takeInput();
         checkInput();
         if (status.getTextFill()==Color.BLUE)
         Main.start(inputs);
-
+        long finishTime = System.currentTimeMillis();
+        double takenTime = (finishTime-startTime+0.0)/1000;
+        Main.saveTime("Total time taken:\t"+takenTime);
     }
 
     public static void setStatus(String text, Paint color){
