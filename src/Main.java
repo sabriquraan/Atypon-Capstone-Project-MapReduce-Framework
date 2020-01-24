@@ -120,6 +120,7 @@ public class Main {
         reducing();
         Analyser.saveTime("Finish Reducing");
         HomeScreen.setStatus("Finish", Color.GREEN);
+        socket=null;
 
     }
 }
