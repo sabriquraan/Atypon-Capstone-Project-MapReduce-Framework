@@ -1,0 +1,240 @@
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+
+import java.io.IOException;
+
+
+public class HomeScreen   {
+
+    private static VBox numReducerAll;
+    private static VBox numMapperAll;
+    private  static VBox root;
+    private  static HBox functions;
+    private  static HBox inputFile;
+    private static Label status;
+    private static TextField numOfMappers;
+    private static TextField numOfReducers;
+    private static TextField inputFilePath;
+    private static TextArea reducerFunction;
+    private static TextArea mapperFunction;
+    private static TextArea importReducerFunction;
+    private static TextArea importMapperFunction;
+    private static Button startButton;
+    private static Scene scene;
+    private static String []inputs;
+
+
+    public void initialisation(){
+
+        inputs=new String[7];
+
+        Label inputFileLabel = new Label("Input File Path");
+        inputFilePath = new TextField("/home/sabri/Documents/Project/input.txt");
+
+        Label mapperFunctionLabel = new Label("Mapper function");
+        Label reducerFunctionLabel = new Label("Reducer function");
+
+        startButton = new Button("Start");
+
+        mapperFunction = new TextArea(" public static Map<?,?> mapper(BufferedReader source) throws IOException {\n\n\n\n}");
+        reducerFunction = new TextArea("  public static Map<?,?> reducer(Map<String,List<String>> reducerInput) throws IOException {\n\n\n\n}");
+        importMapperFunction=new TextArea("import java.io.*;\n" +
+                "import java.net.Socket;\n" +
+                "import java.nio.channels.FileLock;\n" +
+                "import java.text.DateFormat;\n" +
+                "import java.text.SimpleDateFormat;\n" +
+                "import java.util.Date;\n" +
+                "import java.util.Map;\n" +
+                "import java.util.TreeMap;\n" +
+                "import java.util.regex.Matcher;\n" +
+                "import java.util.regex.Pattern;\n");
+        importReducerFunction=new TextArea("import java.io.*;\n" +
+                "import java.net.ServerSocket;\n" +
+                "import java.net.Socket;\n" +
+                "import java.net.SocketException;\n" +
+                "import java.text.DateFormat;\n" +
+                "import java.text.SimpleDateFormat;\n" +
+                "import java.util.*;\n");
+
+        Label numOfMapperLabel = new Label("Number of mappers");
+        Label numOfReducerLabel = new Label("Number of reducers");
+        numOfMappers = new TextField("2");
+        numOfReducers = new TextField("2");
+
+
+        status = new Label("IDEL");
+
+
+        inputFile=new HBox(inputFileLabel,inputFilePath);
+        VBox mapperAll = new VBox(mapperFunctionLabel, importMapperFunction, mapperFunction);
+        VBox reducerAll = new VBox(reducerFunctionLabel, importReducerFunction, reducerFunction);
+        functions = new HBox(mapperAll, reducerAll);
+
+
+        numMapperAll = new VBox(numOfMapperLabel,numOfMappers);
+        numReducerAll = new VBox(numOfReducerLabel,numOfReducers);
+        HBox numOfNodes = new HBox(numMapperAll, numReducerAll);
+        root = new VBox(inputFile,functions, numOfNodes, startButton,status);
+
+    }
+
+    public void setSize(){
+
+        importReducerFunction.setPrefWidth(1000);
+        importReducerFunction.setPrefHeight(500);
+
+        importMapperFunction.setPrefWidth(1000);
+        importMapperFunction.setPrefHeight(500);
+
+        mapperFunction.setPrefWidth(750);
+        reducerFunction.setPrefWidth(750);
+        mapperFunction.setPrefHeight(750);
+        reducerFunction.setPrefHeight(750);
+
+
+        inputFilePath.setPrefWidth(1000);
+        numOfReducers.setPrefWidth(1000);
+        numOfMappers.setPrefWidth(1000);
+
+        startButton.setMaxWidth(200);
+        startButton.setMinHeight(50);
+    }
+
+    public void formatLayout(){
+
+        inputFile.setSpacing(10);
+        functions.setSpacing(10);
+
+        numMapperAll.setPadding(new Insets(10));
+        numReducerAll.setPadding(new Insets(10));
+
+
+        startButton.setPadding(new Insets(15));
+        startButton.setBorder(Border.EMPTY);
+
+        status.setPadding(new Insets(10));
+        status.setTextFill(Color.GREEN);
+        status.setFont(Font.font(18));
+        status.setTextAlignment(TextAlignment.RIGHT);
+
+
+        root.setPadding(new Insets(10));
+        root.setSpacing(10);
+
+    }
+
+    public HomeScreen(){
+
+        initialisation();
+        setSize();
+        formatLayout();
+
+        startButton.setOnAction(event -> {
+            try {
+                startButtonFunction();
+            } catch (IOException | InterruptedException e) {
+                System.out.println("Exception in Start Button.\n");
+                status.setText("Exception in Start Button.\n");
+                status.setTextFill(Color.RED);
+                e.printStackTrace();
+            }
+        });
+        scene = new Scene(root,1600,800);
+
+    }
+
+    public static void takeInput(){
+        inputs[0]=inputFilePath.getText();
+        inputs[1]=numOfMappers.getText();
+        inputs[2]=numOfReducers.getText();
+        inputs[3]=mapperFunction.getText();
+        inputs[4]=importMapperFunction.getText();
+        inputs[5]=reducerFunction.getText();
+        inputs[6]=importReducerFunction.getText();
+    }
+
+    public static void checkInput() throws IOException, InterruptedException {
+
+        if (!CheckInput.isFileExist(inputs[0])) {
+            status.setText("InValid Path of file , Enter Correct Path of Input File");
+            status.setTextFill(Color.RED);
+        }
+
+        if( !CheckInput.isValidNumber(inputs[1])) {
+            if (status.getTextFill()==Color.BLUE)  {
+            status.setText("InValid number of mappers , Enter Correct number of mappers");
+            status.setTextFill(Color.RED);
+            } else if (status.getTextFill()==Color.RED){
+                status.setText("InValid Path of Input File and InValid number of mappers");
+            }
+        }
+
+        if(!CheckInput.isValidNumber(inputs[2])) {
+            if (status.getTextFill()==Color.BLUE) {
+                status.setText("InValid number of reducers , Enter Correct number of reducers");
+                status.setTextFill(Color.RED);
+            } else if (status.getTextFill()==Color.RED) {
+                status.setText("Error : check path of input file , number of mappers  and number of reducers");
+            }
+        }
+
+       if (!CheckInput.isCorrectMapper(inputs[4],inputs[3])) {
+           if (status.getTextFill()==Color.BLUE) {
+               status.setText("Syntax Error in Mapper , Enter Correct function of mapper");
+               status.setTextFill(Color.RED);
+           } else if (status.getTextFill()==Color.RED) {
+               status.setText("Error : check path of input file , number of mappers  , number of reducers and mapper function");
+           }
+           }
+        if (!CheckInput.isCorrectReducer(inputs[6],inputs[5])) {
+            if (status.getTextFill() == Color.BLUE) {
+                status.setText("Syntax Error in Reducer , Enter Correct function of reducer");
+                status.setTextFill(Color.RED);
+            } else if (status.getTextFill() == Color.RED) {
+                status.setText("Error : check path of input file , number of mappers  , number of reducers , mapper function and reducer function");
+
+            }
+
+        }
+
+
+    }
+    public static void startButtonFunction() throws IOException, InterruptedException {
+
+        status.setText("Working");
+        status.setTextFill(Color.BLUE);
+        takeInput();
+        checkInput();
+        if (status.getTextFill()==Color.BLUE)
+        Main.start(inputs);
+
+    }
+
+    public static void setStatus(String text, Paint color){
+        if (text==null || color==null)
+            return;
+
+        status.setTextFill(color);
+        status.setText(text);
+
+    }
+
+    public Scene getScreen(){
+        return scene;
+    }
+
+
+    }
+
+
