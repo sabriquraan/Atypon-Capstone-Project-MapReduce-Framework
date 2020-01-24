@@ -211,7 +211,9 @@ public class HomeScreen   {
 
     }
     public static void startButtonFunction() throws IOException, InterruptedException {
+        Analyser.saveTime("Start Processing");
         long startTime = System.currentTimeMillis();
+        long startMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
         status.setText("Working");
         status.setTextFill(Color.BLUE);
         takeInput();
@@ -220,7 +222,13 @@ public class HomeScreen   {
         Main.start(inputs);
         long finishTime = System.currentTimeMillis();
         double takenTime = (finishTime-startTime+0.0)/1000;
-        Main.saveTime("Total time taken:\t"+takenTime);
+        long finishMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+        double takenMemory = (finishMemory-startMemory+0.0)/(1024*1024);
+        Analyser.saveTime("Finish Processing");
+        Analyser.saveMessage("Total time taken:\t"+takenTime+"s");
+        Analyser.saveMessage("Taken Memory is :\t" + takenMemory + "MB");
+
+
     }
 
     public static void setStatus(String text, Paint color){

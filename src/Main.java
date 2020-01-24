@@ -60,17 +60,7 @@ public class Main {
         }
     }
 
-    public static void saveTime(String message) throws IOException {
-        Date date = new Date();
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        String stringDate = sdf.format(date);
-        BufferedWriter writer=new BufferedWriter(new FileWriter("./Output/MapReduceSystem.txt",true));
-        writer.append(message).append(" :");
-        writer.append(stringDate);
-        writer.newLine();
-        System.out.println(stringDate);
-        writer.close();
-    }
+
 
     public static void initialisation() throws IOException, InterruptedException {
         Process process=Runtime.getRuntime().exec("rm -r Output");
@@ -123,14 +113,14 @@ public class Main {
         takeInput(inputs);
         initialisation();
         compiling();
-        saveTime("Start Mapping");
+        Analyser.saveTime("Start Mapping");
 
         mapping();
 
         waitMappers(numOfMapper);
-        saveTime("Finish Mapping");
+        Analyser.saveTime("Finish Mapping");
         reducing();
-        saveTime("Finish Reducing");
+        Analyser.saveTime("Finish Reducing");
         HomeScreen.setStatus("Finish", Color.GREEN);
 
     }
