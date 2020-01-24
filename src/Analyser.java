@@ -13,7 +13,7 @@ public class Analyser {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String stringDate = sdf.format(date);
         BufferedWriter writer=new BufferedWriter(new FileWriter("./Output/MapReduceSystem.txt",true));
-        writer.append(message).append(" :\t");
+        writer.append(message).append(" :\t\t");
         writer.append(stringDate);
         writer.newLine();
         System.out.println(stringDate);

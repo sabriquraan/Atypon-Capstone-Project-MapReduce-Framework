@@ -25,7 +25,12 @@ public class Main {
 
 
     public static void createDirectories(){
-
+        if( !new File("./Output").exists())
+            new File("./Output").mkdir();
+        if( !new File("./Output/MapperInfo").exists())
+            new File("./Output/MapperInfo").mkdir();
+        if( !new File("./Output/ReducerInfo").exists())
+            new File("./Output/ReducerInfo").mkdir();
         if( !new File("./Files").exists())
             new File("Files").mkdir();
         if( !new File("./Files/map").exists())
@@ -36,12 +41,7 @@ public class Main {
             new File("./Files/keys").mkdir();
         if( !new File("./Files/reducer").exists())
             new File("./Files/reducer").mkdir();
-        if( !new File("./Output").exists())
-            new File("./Output").mkdir();
-        if( !new File("./Output/MapperInfo").exists())
-            new File("./Output/MapperInfo").mkdir();
-        if( !new File("./Output/ReducerInfo").exists())
-            new File("./Output/ReducerInfo").mkdir();
+
     }
 
     public static void waitMappers(int numOfNode) throws IOException {
@@ -63,8 +63,6 @@ public class Main {
 
 
     public static void initialisation() throws IOException, InterruptedException {
-        Process process=Runtime.getRuntime().exec("rm -r Output");
-        process.waitFor();
         socket=new ServerSocket(PORT_NUM);
         createDirectories();
         Splitting.splitTextFiles(numOfMapper,filePath);
@@ -113,7 +111,7 @@ public class Main {
         takeInput(inputs);
         initialisation();
         compiling();
-        Analyser.saveTime("Start Mapping");
+        Analyser.saveTime("Start Mapping ");
 
         mapping();
 

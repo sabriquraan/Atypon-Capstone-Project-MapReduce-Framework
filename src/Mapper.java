@@ -93,7 +93,7 @@ public class Mapper {
                     "        DateFormat sdf = new SimpleDateFormat(\"yyyy-MM-dd HH:mm:ss.SSS\");\n" +
                     "        String stringDate = sdf.format(date);\n" +
                     "        BufferedWriter writer=new BufferedWriter(new FileWriter(\"/dirc/Output/MapperInfo/mapperInfo\"+mapperNum+\".txt\",true));\n" +
-                    "        writer.append(message+\"  :\");\n" +
+                    "        writer.append(message+\"  :\\t\\t\");\n" +
                     "        writer.append(stringDate+\"\\n\");\n" +
                     "        writer.close();\n" +
                     "    }\n" +
@@ -123,7 +123,17 @@ public class Mapper {
                     "    }\n" +
                     "\n" +
                     "\n" +
+                    "public static void saveMessage(int mapperNum,String message) throws IOException {\n" +
+                            "        BufferedWriter writer=new BufferedWriter(new FileWriter(\"/dirc/Output/MapperInfo/mapperInfo\"+mapperNum+\".txt\",true));\n" +
+                            "        writer.append(message);\n" +
+                            "        writer.newLine();\n" +
+                            "        writer.close();\n" +
+                            "    }\n"+
+
                     "    public static void main(String[] args) throws IOException {\n" +
+                    "\n" +
+                            "        long startTime = System.currentTimeMillis();\n" +
+                            "        long startMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();\n"+
                     "        int mapperNum = Integer.parseInt(args[0]);\n" +
                     "        int numOfReducer= Integer.parseInt(args[1]);\n" +
                     "\n" +
@@ -150,6 +160,13 @@ public class Mapper {
                     "        sendSignal();\n" +
                     "        \n" +
                     "        saveTime(mapperNum,\"finish mapper\");\n" +
+                    "        long finishTime = System.currentTimeMillis();\n" +
+                    "   double takenTime = (finishTime-startTime+0.0)/1000;\n" +
+                            "        long finishMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();\n" +
+                            "        double takenMemory = (finishMemory-startMemory+0.0)/(1024*1024);\n" +
+                    "\n" +
+                    "        saveMessage(mapperNum,\"Total time taken:\\t\"+takenTime+\"s\");\n" +
+                    "        saveMessage(mapperNum,\"Taken Memory is :\\t\" + takenMemory + \"MB\");\n"+
                     "\n" +
                     "    }\n" +
                     "\n" +

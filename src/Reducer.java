@@ -140,16 +140,32 @@ public class Reducer {
                     "    public static void clean() throws InterruptedException, IOException {\n" +
                     "        Process process=Runtime.getRuntime().exec(\"rm -r /dirc/Files\");\n" +
                     "        process.waitFor();\n" +
-                    "    }    public static void saveTime(int reducerNum,String message) throws IOException {\n" +
+                    "    }  " +
+
+
+                    "        public static void saveTime(int reducerNum,String message) throws IOException {\n" +
                     "        Date date = new Date();\n" +
                     "        DateFormat sdf = new SimpleDateFormat(\"yyyy-MM-dd HH:mm:ss.SSS\");\n" +
                     "        String stringDate = sdf.format(date);\n" +
                     "        BufferedWriter writer=new BufferedWriter(new FileWriter(\"/dirc/Output/ReducerInfo/reducerInfo\"+reducerNum+\".txt\",true));\n" +
-                    "        writer.append(message+\"  :\");\n" +
+                    "        writer.append(message+\"  :\\t\\t\");\n" +
                     "        writer.append(stringDate+\"\\n\");\n" +
                     "        writer.close();\n" +
                     "    }\n" +
+
+                            "\n" +
+                            "public static void saveMessage(int reducerNum,String message) throws IOException {\n" +
+                            "        BufferedWriter writer=new BufferedWriter(new FileWriter(\"/dirc/Output/ReducerInfo/reducerInfo\"+reducerNum+\".txt\",true));\n" +
+                            "        writer.append(message);\n" +
+                            "        writer.newLine();\n" +
+                            "        writer.close();\n" +
+                            "    }\n"+
+
+
                     "    public static void main(String[] args) throws IOException, InterruptedException {\n" +
+                    "\n" +
+                    "        long startTime = System.currentTimeMillis();\n" +
+                    "        long startMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();\n"+
                     "        int reducerNum= Integer.parseInt(args[0]);\n" +
                     "        numOfReducer= Integer.parseInt(args[1]);\n" +
                     "\n" +
@@ -158,6 +174,14 @@ public class Reducer {
                     "        Map<?,?> reducer=reducer(inputReducer);\n" +
                     "        writeResult(reducer,reducerNum);\n" +
                     "        saveTime(reducerNum,\"Reducer Finish:\");\n" +
+                    "        long finishTime = System.currentTimeMillis();\n" +
+                    "   double takenTime = (finishTime-startTime+0.0)/1000;\n" +
+                    "        long finishMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();\n" +
+                    "        double takenMemory = (finishMemory-startMemory+0.0)/(1024*1024);\n" +
+                    "\n" +
+                    "        saveMessage(reducerNum,\"Total time taken:\\t\"+takenTime+\"s\");\n" +
+                    "        saveMessage(reducerNum,\"Taken Memory is :\\t\" + takenMemory + \"MB\");\n"+
+                    "\n" +
                     "\n" +
                     "    }\n" +
                     "\n" +

@@ -10,6 +10,7 @@ public class Splitting {
 
     public  static void splitTextFiles(int numOfMapper,Path bigFile) throws IOException {
 
+
         if (!CheckInput.isValidNumber(String.valueOf(numOfMapper)))
             throw new IllegalArgumentException("Error in number of mappers\n");
 

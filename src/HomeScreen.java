@@ -134,8 +134,11 @@ public class HomeScreen   {
 
     }
 
-    public HomeScreen(){
-
+    public HomeScreen() throws InterruptedException, IOException {
+        Process process2=Runtime.getRuntime().exec("rm -r Output");
+        process2.waitFor();
+        Process process=Runtime.getRuntime().exec("mkdir Output");
+        process.waitFor();
         initialisation();
         setSize();
         formatLayout();
@@ -210,6 +213,7 @@ public class HomeScreen   {
 
 
     }
+
     public static void startButtonFunction() throws IOException, InterruptedException {
         Analyser.saveTime("Start Processing");
         long startTime = System.currentTimeMillis();
