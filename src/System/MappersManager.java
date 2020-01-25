@@ -161,17 +161,14 @@ public class MappersManager {
                     "        Map<?, ?> map=mapper(source);\n" +
                     "        \n" +
                     "        saveTime(mapperNum,\"Finish Mapping\");\n" +
-                    "        saveTime(mapperNum,\"Start Write Keys\");\n" +
                     "        \n" +
                     "        write(map,destination);\n" +
                     "        \n" +
-                    "        saveTime(mapperNum,\"Finish Write Keys\");\n" +
                     "        saveTime(mapperNum,\"Start Shuffling Keys\");\n" +
                     "        \n" +
                     "        shuffling(mapperNum,numOfReducer);\n" +
                     "        \n" +
                     "        saveTime(mapperNum,\"Finish Shuffling Keys\");\n" +
-                    "        saveTime(mapperNum,\"send Signal\");\n" +
                     "        \n" +
                     "        sendSignal();\n" +
                     "        \n" +

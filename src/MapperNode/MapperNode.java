@@ -11,7 +11,7 @@ import static MapperNode.StatusReporter.saveMessage;
 import static MapperNode.StatusReporter.saveTime;
 import static MapperNode.WriterMap.write;
 
-public class MapperNode implements Mapper{
+public class MapperNode  {
 
     public static Map<?,?> mapper(BufferedReader source) throws IOException {
 

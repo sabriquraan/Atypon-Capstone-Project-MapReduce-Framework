@@ -18,9 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
-import java.nio.file.Path;
-
-import static java.lang.Thread.sleep;
 
 
 public class HomeScreen  implements Screen {
@@ -59,45 +56,10 @@ public class HomeScreen  implements Screen {
        // reducerFunction = new TextArea("  public static Map<?,?> reducer(Map<String,List<String>> reducerInput) throws IOException {\n\n\n\n}");
         mapperFunction=new TextArea("    public static Map<?,?> mapper(BufferedReader source) throws IOException {\n" +
                 "\n" +
-                "        Pattern pattern = Pattern.compile(\"[a-zA-Z]+\");\n" +
-                "        TreeMap<String,Integer> wordCount = new TreeMap<String,Integer>();\n" +
-                "        Matcher matcher ;\n" +
-                "        String str = source.readLine();\n" +
-                "        while(str!=null){\n" +
-                "            if(!str.equals(\"\")){\n" +
-                "                matcher = pattern.matcher(str);\n" +
-                "                while(matcher.find()){\n" +
-                "                    String word = matcher.group();\n" +
-                "                    if(!wordCount.containsKey(word))\n" +
-                "                        wordCount.put(word,1);\n" +
-                "                    else\n" +
-                "                        wordCount.put(word,wordCount.get(word)+1);\n" +
-                "                }\n" +
-                "            }\n" +
-                "            str = source.readLine();\n" +
-                "        }\n" +
                 "\n" +
-                "        return wordCount;\n" +
-                "\n" +
-                "\n" +
-                "    }");
+                "  \n\n  }");
         reducerFunction=new TextArea("public static Map<?,?> reducer(Map<String,List<String>> reducerInput) throws IOException {\n" +
-                "\n" +
-                "\n" +
-                "        TreeMap<String, Integer> reducer = new TreeMap<>();\n" +
-                "\n" +
-                "        reducerInput.keySet().forEach(k -> {\n" +
-                "            List<String> values=reducerInput.get(k);\n" +
-                "            int sumOfValues=0;\n" +
-                "            for (String value:values)\n" +
-                "                sumOfValues+=Integer.parseInt(value);\n" +
-                "\n" +
-                "            reducer.put(k,sumOfValues);\n" +
-                "\n" +
-                "        });\n" +
-                "        return reducer;\n" +
-                "\n" +
-                "    }");
+                "  \n\n\n \n }");
         importMapperFunction=new TextArea("import java.io.*;\n" +
                 "import java.net.Socket;\n" +
                 "import java.nio.channels.FileLock;\n" +
@@ -276,8 +238,10 @@ public class HomeScreen  implements Screen {
         takeInput();
         checkInput();
         if (status.getTextFill()==Color.BLUE) {
-            MapReduceSystem mapReduceSystem=new MapReduceSystem.SystemBuilder(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]))
-                    .mapperCode(inputs[3],inputs[4]).reducerCode(inputs[5],inputs[6]).inputFile(inputs[0]).build();
+            MapReduceSystem mapReduceSystem=new MapReduceSystem.SystemBuilder(Integer.parseInt(inputs[1]), Integer.parseInt(inputs[2]))
+                    .mapperCode(inputs[3],inputs[4]).
+                            reducerCode(inputs[5],inputs[6]).
+                            inputFile(inputs[0]).build();
             mapReduceSystem.start();
         }
 

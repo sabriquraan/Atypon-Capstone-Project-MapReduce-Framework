@@ -144,9 +144,9 @@ public class MapReduceSystem {
         }
 
         public MapReduceSystem build() {
-            MapReduceSystem system =  new MapReduceSystem(this);
-            return system;
+            return new MapReduceSystem(this);
         }
+
 
 
     }

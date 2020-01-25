@@ -114,13 +114,10 @@ public class ReducerManager {
                     "        boolean flag=true;\n" +
                     "        while(flag){\n" +
                     "            if (reducerNum==1) {\n" +
-                    "                saveTime(reducerNum,\"Reducer in while loop:\");\n" +
                     "                flag=false;\n" +
                     "            } else {\n" +
-                    "                saveTime(reducerNum,\"Reducer in while loop(wait):\");\n" +
                     "                waitFor(reducerNum-1);\n" +
                     "                flag=false;\n" +
-                    "                saveTime(reducerNum,\"Reducer in while loop(after wait):\");\n" +
                     "\n" +
                     "            }\n" +
                     "        }\n" +
@@ -135,11 +132,9 @@ public class ReducerManager {
                     "        });\n" +
                     "\n" +
                     "        dst.close();\n" +
-                    "        saveTime(reducerNum,\"Reducer befoar send signal:\");\n" +
                     "        if (reducerNum!=numOfReducer)\n" +
                     "            sendSignal(reducerNum);\n" +
                     "        else clean();\n" +
-                    "        saveTime(reducerNum,\"Reducer after send signal:\");\n" +
                     "    }\n" +
                     "    public static void clean() throws InterruptedException, IOException {\n" +
                     "        Process process=Runtime.getRuntime().exec(\"rm -r /dirc/Files\");\n" +
