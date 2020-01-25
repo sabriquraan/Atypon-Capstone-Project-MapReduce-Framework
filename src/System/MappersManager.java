@@ -1,3 +1,7 @@
+package System;
+
+import Common.Checker;
+
 import java.io.*;
 
 public class MappersManager {

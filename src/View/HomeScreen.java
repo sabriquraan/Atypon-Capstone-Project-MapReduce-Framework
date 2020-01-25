@@ -1,3 +1,8 @@
+package View;
+
+import System.StatusReporter;
+import System.MapReduceSystem;
+import Common.Checker;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

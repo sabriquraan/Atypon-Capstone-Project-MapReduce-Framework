@@ -27,3 +27,12 @@
 /out/production/MapReduce/StatusReporter.class
 /src/Mapper.java
 /output2.txt
+/out/production/MapReduce/Common/Checker.class
+/out/production/MapReduce/View/HomeScreen.class
+/out/production/MapReduce/System/MappersManager.class
+/out/production/MapReduce/System/MapReduceSystem.class
+/out/production/MapReduce/ReducerNode/Preparator.class
+/out/production/MapReduce/ReducerNode/Reducer.class
+/out/production/MapReduce/System/ReducerManager.class
+/out/production/MapReduce/System/StatusReporter.class
+/out/production/MapReduce/ReducerNode/WriterOutput.class
