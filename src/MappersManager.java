@@ -1,12 +1,12 @@
 import java.io.*;
 
-public class MapperManager {
+public class MappersManager {
 
     int numOfMapper;
     int numOfReducer;
 
 
-    public MapperManager(int numOfMapper, int numOfReducer) {
+    public MappersManager(int numOfMapper, int numOfReducer) {
         if (Checker.isValidNumber(String.valueOf(numOfMapper))) {
             this.numOfMapper = numOfMapper;
         }
@@ -54,14 +54,16 @@ public class MapperManager {
                     "        FileOutputStream out=null;\n" +
                     "        int min = 64;\n" +
                     "        int max = 123;\n" +
-                    "        double total_length = max - min;\n" +
+                    "        double total_length = max - min -7;\n" +
                     "        int subrange_length = (int) total_length / numOfReducer;\n" +
                     "        double current_start = min;\n" +
                     "        int[] ranges = new int[numOfReducer + 1];\n" +
                     "        for (int i = 0; i <= numOfReducer; ++i) {\n" +
                     "            ranges[i] = (int) current_start;\n" +
                     "            current_start += subrange_length;\n" +
-                    "        }\n" +
+                    "            if (current_start>=90&&current_start<97)\n" +
+                    "                current_start+=(current_start-90);\n" +
+                    "        }" +
                     "        int reducerNum = 0;\n" +
                     "        BufferedReader in = new BufferedReader(new FileReader(\"/dirc/Files/keys/\"+mapperNum+\"keys.txt\"));\n" +
                     "        String line =in.readLine();\n" +

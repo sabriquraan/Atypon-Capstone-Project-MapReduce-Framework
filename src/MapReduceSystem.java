@@ -62,12 +62,12 @@ public class MapReduceSystem {
         createDirectories();
         Splitter.splitTextFiles(numOfMapper,filePath);
         ReducerManager.createReducerFunction(importReducer,reducerFunction);
-        MapperManager.createMappingFunction(importMapper,mapperFunction);
+        MappersManager.createMappingFunction(importMapper,mapperFunction);
 
     }
 
     public static void mapping() throws IOException, InterruptedException {
-        MapperManager mapperManager=new MapperManager(numOfMapper,numOfReducer);
+        MappersManager mapperManager=new MappersManager(numOfMapper,numOfReducer);
         mapperManager.runMappers();
     }
 
