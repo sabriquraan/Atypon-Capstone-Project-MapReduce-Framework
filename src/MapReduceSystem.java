@@ -5,12 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
-public class Main {
+public class MapReduceSystem {
 
     private static int numOfMapper;
     private static int numOfReducer;
@@ -60,30 +57,30 @@ public class Main {
         }
     }
 
-
-
-    public static void initialisation() throws IOException, InterruptedException {
+    public static void initialisation() throws IOException {
         socket=new ServerSocket(PORT_NUM);
         createDirectories();
-        Splitting.splitTextFiles(numOfMapper,filePath);
-        Reducer.createReducerFunction(importReducer,reducerFunction);
-        Mapper.createMappingFunction(importMapper,mapperFunction);
+        Splitter.splitTextFiles(numOfMapper,filePath);
+        ReducerManager.createReducerFunction(importReducer,reducerFunction);
+        MapperManager.createMappingFunction(importMapper,mapperFunction);
     }
 
     public static void mapping() throws IOException, InterruptedException {
-        Mapper mapper=new Mapper(numOfMapper,numOfReducer);
+        MapperManager mapper=new MapperManager(numOfMapper,numOfReducer);
         mapper.runMappers();
     }
 
     public static void reducing() throws IOException, InterruptedException {
-        Reducer reducer=new Reducer(numOfReducer);
+        ReducerManager reducer=new ReducerManager(numOfReducer);
         reducer.runReducers();
     }
+
     public static void compiling() throws IOException, InterruptedException {
         Process p = Runtime.getRuntime().exec("./Compiling.sh");
         p.waitFor();
 
     }
+
     public static void takeInput(String [] inputs){
         for (String input:inputs)
             if (input==null) {
@@ -111,14 +108,14 @@ public class Main {
         takeInput(inputs);
         initialisation();
         compiling();
-        Analyser.saveTime("Start Mapping ");
+        StatusReporter.saveTime("Start Mapping ");
 
         mapping();
 
         waitMappers(numOfMapper);
-        Analyser.saveTime("Finish Mapping");
+        StatusReporter.saveTime("Finish Mapping");
         reducing();
-        Analyser.saveTime("Finish Reducing");
+        StatusReporter.saveTime("Finish Reducing");
         HomeScreen.setStatus("Finish", Color.GREEN);
         socket.close();
 

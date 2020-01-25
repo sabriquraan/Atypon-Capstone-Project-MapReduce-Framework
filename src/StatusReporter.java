@@ -5,7 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Analyser {
+public class StatusReporter {
 
 
     public static void saveTime(String message) throws IOException {

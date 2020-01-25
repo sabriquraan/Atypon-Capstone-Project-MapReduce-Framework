@@ -3,18 +3,19 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CheckInput {
+public class Checker {
 
     public static boolean isValidNumber(String text){
         if (text==null)
         return false;
         try {
             int number = Integer.parseInt(text);
-            if (number<= 0)
+            if (number<= 1)
                 return false;
         } catch (NumberFormatException e) {
             return false;
         }
+
 
         return true;
     }

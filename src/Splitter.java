@@ -6,15 +6,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class Splitting {
+public class Splitter {
 
     public  static void splitTextFiles(int numOfMapper,Path bigFile) throws IOException {
 
 
-        if (!CheckInput.isValidNumber(String.valueOf(numOfMapper)))
+        if (!Checker.isValidNumber(String.valueOf(numOfMapper)))
             throw new IllegalArgumentException("Error in number of mappers\n");
 
-        if (!CheckInput.isFileExist(String.valueOf(bigFile)))
+        if (!Checker.isFileExist(String.valueOf(bigFile)))
             throw new IllegalArgumentException("Error in input file path\n");
 
 

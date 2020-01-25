@@ -3,11 +3,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Reducer {
+public class ReducerManager {
     int numOfReducer;
 
-    public Reducer(int numOfReducer) {
-        if(CheckInput.isValidNumber(String.valueOf(numOfReducer))) {
+    public ReducerManager(int numOfReducer) {
+        if(Checker.isValidNumber(String.valueOf(numOfReducer))) {
             this.numOfReducer = numOfReducer;
         }
     }

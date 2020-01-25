@@ -1,16 +1,16 @@
 import java.io.*;
 
-public class Mapper {
+public class MapperManager {
 
     int numOfMapper;
     int numOfReducer;
 
 
-    public Mapper(int numOfMapper, int numOfReducer) {
-        if (CheckInput.isValidNumber(String.valueOf(numOfMapper))) {
+    public MapperManager(int numOfMapper, int numOfReducer) {
+        if (Checker.isValidNumber(String.valueOf(numOfMapper))) {
             this.numOfMapper = numOfMapper;
         }
-        if (CheckInput.isValidNumber(String.valueOf(numOfReducer))) {
+        if (Checker.isValidNumber(String.valueOf(numOfReducer))) {
             this.numOfReducer = numOfReducer;
         }
     }
@@ -47,14 +47,15 @@ public class Mapper {
                     "\n" +
                     "public class Mapper {\n" +
                     "\n" +
+
                     "\n" +
-                    "    public static void shuffling(int mapperNum,int numOfReducer) throws IOException {\n" +
+                          " public static void shuffling(int mapperNum,int numOfReducer) throws IOException {\n" +
                     "        BufferedWriter writer = null;\n" +
                     "        FileOutputStream out=null;\n" +
                     "        int min = 64;\n" +
                     "        int max = 123;\n" +
                     "        double total_length = max - min;\n" +
-                    "        double subrange_length = total_length / (numOfReducer);\n" +
+                    "        int subrange_length = (int) total_length / numOfReducer;\n" +
                     "        double current_start = min;\n" +
                     "        int[] ranges = new int[numOfReducer + 1];\n" +
                     "        for (int i = 0; i <= numOfReducer; ++i) {\n" +
@@ -86,7 +87,7 @@ public class Mapper {
                     "        writer.close();\n" +
                     "        in.close();\n" +
                     "\n" +
-                    "    }\n" +
+                    "    }"+
                     "\n" +
                     "    public static void saveTime(int mapperNum,String message) throws IOException {\n" +
                     "        Date date = new Date();\n" +

@@ -15,7 +15,7 @@ import javafx.scene.text.TextAlignment;
 import java.io.IOException;
 
 
-public class HomeScreen   {
+public class HomeScreen  implements Screen {
 
     private static VBox numReducerAll;
     private static VBox numMapperAll;
@@ -47,8 +47,49 @@ public class HomeScreen   {
 
         startButton = new Button("Start");
 
-        mapperFunction = new TextArea(" public static Map<?,?> mapper(BufferedReader source) throws IOException {\n\n\n\n}");
-        reducerFunction = new TextArea("  public static Map<?,?> reducer(Map<String,List<String>> reducerInput) throws IOException {\n\n\n\n}");
+      //  mapperFunction = new TextArea(" public static Map<?,?> mapper(BufferedReader source) throws IOException {\n\n\n\n}");
+       // reducerFunction = new TextArea("  public static Map<?,?> reducer(Map<String,List<String>> reducerInput) throws IOException {\n\n\n\n}");
+        mapperFunction=new TextArea("    public static Map<?,?> mapper(BufferedReader source) throws IOException {\n" +
+                "\n" +
+                "        Pattern pattern = Pattern.compile(\"[a-zA-Z]+\");\n" +
+                "        TreeMap<String,Integer> wordCount = new TreeMap<String,Integer>();\n" +
+                "        Matcher matcher ;\n" +
+                "        String str = source.readLine();\n" +
+                "        while(str!=null){\n" +
+                "            if(!str.equals(\"\")){\n" +
+                "                matcher = pattern.matcher(str);\n" +
+                "                while(matcher.find()){\n" +
+                "                    String word = matcher.group();\n" +
+                "                    if(!wordCount.containsKey(word))\n" +
+                "                        wordCount.put(word,1);\n" +
+                "                    else\n" +
+                "                        wordCount.put(word,wordCount.get(word)+1);\n" +
+                "                }\n" +
+                "            }\n" +
+                "            str = source.readLine();\n" +
+                "        }\n" +
+                "\n" +
+                "        return wordCount;\n" +
+                "\n" +
+                "\n" +
+                "    }");
+        reducerFunction=new TextArea("public static Map<?,?> reducer(Map<String,List<String>> reducerInput) throws IOException {\n" +
+                "\n" +
+                "\n" +
+                "        TreeMap<String, Integer> reducer = new TreeMap<>();\n" +
+                "\n" +
+                "        reducerInput.keySet().forEach(k -> {\n" +
+                "            List<String> values=reducerInput.get(k);\n" +
+                "            int sumOfValues=0;\n" +
+                "            for (String value:values)\n" +
+                "                sumOfValues+=Integer.parseInt(value);\n" +
+                "\n" +
+                "            reducer.put(k,sumOfValues);\n" +
+                "\n" +
+                "        });\n" +
+                "        return reducer;\n" +
+                "\n" +
+                "    }");
         importMapperFunction=new TextArea("import java.io.*;\n" +
                 "import java.net.Socket;\n" +
                 "import java.nio.channels.FileLock;\n" +
@@ -134,7 +175,7 @@ public class HomeScreen   {
 
     }
 
-    public HomeScreen() throws InterruptedException, IOException {
+    public HomeScreen() {
 
         initialisation();
         setSize();
@@ -166,12 +207,12 @@ public class HomeScreen   {
 
     public static void checkInput() throws IOException, InterruptedException {
 
-        if (!CheckInput.isFileExist(inputs[0])) {
+        if (!Checker.isFileExist(inputs[0])) {
             status.setText("InValid Path of file , Enter Correct Path of Input File");
             status.setTextFill(Color.RED);
         }
 
-        if( !CheckInput.isValidNumber(inputs[1])) {
+        if( !Checker.isValidNumber(inputs[1])) {
             if (status.getTextFill()==Color.BLUE)  {
             status.setText("InValid number of mappers , Enter Correct number of mappers");
             status.setTextFill(Color.RED);
@@ -180,7 +221,7 @@ public class HomeScreen   {
             }
         }
 
-        if(!CheckInput.isValidNumber(inputs[2])) {
+        if(!Checker.isValidNumber(inputs[2])) {
             if (status.getTextFill()==Color.BLUE) {
                 status.setText("InValid number of reducers , Enter Correct number of reducers");
                 status.setTextFill(Color.RED);
@@ -189,7 +230,7 @@ public class HomeScreen   {
             }
         }
 
-       if (!CheckInput.isCorrectMapper(inputs[4],inputs[3])) {
+       if (!Checker.isCorrectMapper(inputs[4],inputs[3])) {
            if (status.getTextFill()==Color.BLUE) {
                status.setText("Syntax Error in Mapper , Enter Correct function of mapper");
                status.setTextFill(Color.RED);
@@ -197,7 +238,7 @@ public class HomeScreen   {
                status.setText("Error : check path of input file , number of mappers  , number of reducers and mapper function");
            }
            }
-        if (!CheckInput.isCorrectReducer(inputs[6],inputs[5])) {
+        if (!Checker.isCorrectReducer(inputs[6],inputs[5])) {
             if (status.getTextFill() == Color.BLUE) {
                 status.setText("Syntax Error in Reducer , Enter Correct function of reducer");
                 status.setTextFill(Color.RED);
@@ -217,24 +258,27 @@ public class HomeScreen   {
         Process process=Runtime.getRuntime().exec("mkdir Output");
         process.waitFor();
     }
+
     public static void startButtonFunction() throws IOException, InterruptedException {
         clear();
-        Analyser.saveTime("Start Processing");
+        StatusReporter.saveTime("Start Processing");
         long startTime = System.currentTimeMillis();
         long startMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+
         status.setText("Working");
         status.setTextFill(Color.BLUE);
+
         takeInput();
         checkInput();
         if (status.getTextFill()==Color.BLUE)
-        Main.start(inputs);
+        MapReduceSystem.start(inputs);
         long finishTime = System.currentTimeMillis();
         double takenTime = (finishTime-startTime+0.0)/1000;
         long finishMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
         double takenMemory = (finishMemory-startMemory+0.0)/(1024*1024);
-        Analyser.saveTime("Finish Processing");
-        Analyser.saveMessage("Total time taken:\t"+takenTime+"s");
-        Analyser.saveMessage("Taken Memory is :\t" + takenMemory + "MB");
+        StatusReporter.saveTime("Finish Processing");
+        StatusReporter.saveMessage("Total time taken:\t"+takenTime+"s");
+        StatusReporter.saveMessage("Taken Memory is :\t" + takenMemory + "MB");
 
 
     }
