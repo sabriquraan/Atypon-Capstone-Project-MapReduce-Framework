@@ -30,6 +30,7 @@ public class Splitter {
             String line = null;
             int lineNum = 1;
 
+
             Path splitFile = Paths.get("./Files/split/"+mapperNum + "split.txt");
             BufferedWriter writer = Files.newBufferedWriter(splitFile, StandardOpenOption.CREATE);
 

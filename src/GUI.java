@@ -11,7 +11,7 @@ public class GUI extends Application {
         launch(args);
     }
     @Override
-    public void start(Stage primaryStage) throws IOException, InterruptedException {
+    public void start(Stage primaryStage)  {
 
         HomeScreen homeScreen = new HomeScreen();
         Scene scene = homeScreen.getScreen();
