@@ -23,8 +23,18 @@ public class MapReduceSystem {
     private static final int PORT_NUM =7777;
     private static ServerSocket socket;
 
+    public MapReduceSystem(SystemBuilder systemBuilder) {
+        numOfMapper=systemBuilder.numOfMapper;
+        numOfReducer=systemBuilder.numOfReducer;
+        filePath=systemBuilder.filePath;
+        mapperFunction=systemBuilder.mapperFunction;
+        importMapper=systemBuilder.importMapper;
+        reducerFunction=systemBuilder.reducerFunction;
+        importReducer=systemBuilder.importReducer;
+    }
 
-    public static void createDirectories(){
+
+    private  void createDirectories(){
         if( !new File("./Output").exists())
             new File("./Output").mkdir();
         if( !new File("./Output/MapperInfo").exists())
@@ -44,7 +54,7 @@ public class MapReduceSystem {
 
     }
 
-    public static void waitMappers(int numOfNode) throws IOException {
+    private  void waitMappers(int numOfNode) throws IOException {
         if (numOfNode <=0)
             throw new ArithmeticException("Error in number of nodes");
 
@@ -60,7 +70,7 @@ public class MapReduceSystem {
         }
     }
 
-    public static void initialisation() throws IOException {
+    private  void initialisation() throws IOException {
         socket=new ServerSocket(PORT_NUM);
         createDirectories();
         Splitter.splitTextFiles(numOfMapper,filePath);
@@ -69,23 +79,23 @@ public class MapReduceSystem {
 
     }
 
-    public static void mapping() throws IOException, InterruptedException {
-        MappersManager mapperManager=new MappersManager(numOfMapper,numOfReducer);
+    private  void mapping() throws IOException, InterruptedException {
+        MappersManager mapperManager=MappersManager.createMapperManager(numOfMapper,numOfReducer);
         mapperManager.runMappers();
     }
 
-    public static void reducing() throws IOException, InterruptedException {
+    private  void reducing() throws IOException, InterruptedException {
         ReducerManager reducer=new ReducerManager(numOfReducer);
         reducer.runReducers();
     }
 
-    public static void compiling() throws IOException, InterruptedException {
+    private  void compiling() throws IOException, InterruptedException {
         Process p = Runtime.getRuntime().exec("./Compiling.sh");
         p.waitFor();
 
     }
 
-    public static void takeInput(String [] inputs){
+    private  void takeInput(String [] inputs){
         for (String input:inputs)
             if (input==null) {
                 throw new IllegalArgumentException("Error in inputs\n");
@@ -107,9 +117,9 @@ public class MapReduceSystem {
     }
 
 
-    public static void start(String [] inputs) throws IOException, InterruptedException {
+    public void start() throws IOException, InterruptedException {
 
-        takeInput(inputs);
+      //  takeInput(inputs);
         initialisation();
         compiling();
         StatusReporter.saveTime("Start Mapping ");
@@ -124,4 +134,45 @@ public class MapReduceSystem {
         socket.close();
 
     }
+
+
+    public static class SystemBuilder {
+        private  int numOfMapper;
+        private  int numOfReducer;
+        private  Path filePath;
+        private  String mapperFunction;
+        private  String reducerFunction;
+        private  String importMapper;
+        private  String importReducer;
+
+        public SystemBuilder(int numOfMapper,int numOfReducer) {
+            this.numOfMapper=numOfMapper;
+            this.numOfReducer=numOfReducer;
+        }
+        public SystemBuilder inputFile(String inputFile) {
+            this.filePath=Paths.get(inputFile);
+            return this;
+        }
+        public SystemBuilder mapperCode(String mapperFunction,String importMapper) {
+            this.mapperFunction = mapperFunction;
+            this.importMapper=importMapper;
+            return this;
+        }
+        public SystemBuilder reducerCode(String reducerFunction,String importReducer) {
+            this.reducerFunction = reducerFunction;
+            this.importReducer=importReducer;
+            return this;
+        }
+
+        public MapReduceSystem build() {
+            MapReduceSystem system =  new MapReduceSystem(this);
+            return system;
+        }
+
+
+    }
+
+
+
+
 }

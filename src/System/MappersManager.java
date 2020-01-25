@@ -10,7 +10,16 @@ public class MappersManager {
     int numOfReducer;
 
 
-    public MappersManager(int numOfMapper, int numOfReducer) {
+    public static MappersManager createMapperManager(int numOfMapper,int numOfReducer){
+
+        if (Checker.isValidNumber(String.valueOf(numOfMapper)) &&
+                Checker.isValidNumber(String.valueOf(numOfReducer))) {
+            return new MappersManager(numOfMapper,numOfReducer);
+        }
+        return null;
+    }
+
+    private MappersManager(int numOfMapper, int numOfReducer) {
         if (Checker.isValidNumber(String.valueOf(numOfMapper))) {
             this.numOfMapper = numOfMapper;
         }

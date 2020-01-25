@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import static java.lang.Thread.sleep;
 
@@ -274,8 +275,12 @@ public class HomeScreen  implements Screen {
         setStatus("Working...",Color.BLUE);
         takeInput();
         checkInput();
-        if (status.getTextFill()==Color.BLUE)
-        MapReduceSystem.start(inputs);
+        if (status.getTextFill()==Color.BLUE) {
+            MapReduceSystem mapReduceSystem=new MapReduceSystem.SystemBuilder(Integer.parseInt(inputs[1]),Integer.parseInt(inputs[2]))
+                    .mapperCode(inputs[3],inputs[4]).reducerCode(inputs[5],inputs[6]).inputFile(inputs[0]).build();
+            mapReduceSystem.start();
+        }
+
 
 
         long finishTime = System.currentTimeMillis();
