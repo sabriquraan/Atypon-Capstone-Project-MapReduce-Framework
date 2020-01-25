@@ -39,7 +39,7 @@ public class MappersManager {
         }
     }
 
-    public static void createMappingFunction(String importCode,String mapperFunction) throws IOException {
+    public static void createMappingCode(String importCode, String mapperFunction) throws IOException {
 
         if (importCode==null||mapperFunction==null)
             return;
@@ -121,7 +121,7 @@ public class MappersManager {
                     "\n" +
                     "    }\n" +
                     "\n" +
-                    "    public static void sendSignal() throws IOException {\n" +
+                    "    public static void sendSignal() throws IOException, InterruptedException {\n" +
                     "        Socket socket = new Socket(\"127.0.0.1\", 7777);\n" +
                     "        DataOutputStream out = new DataOutputStream(socket.getOutputStream());\n" +
                     "        out.writeUTF(\"Exit\");\n" +
@@ -137,7 +137,7 @@ public class MappersManager {
                             "        writer.close();\n" +
                             "    }\n"+
 
-                    "    public static void main(String[] args) throws IOException {\n" +
+                    "    public static void main(String[] args) throws IOException, InterruptedException {\n" +
                     "\n" +
                             "        long startTime = System.currentTimeMillis();\n" +
                             "        long startMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();\n"+
@@ -169,6 +169,8 @@ public class MappersManager {
                     "        saveTime(mapperNum,\"finish mapper\");\n" +
                     "        long finishTime = System.currentTimeMillis();\n" +
                     "   double takenTime = (finishTime-startTime+0.0)/1000;\n" +
+                    "Process process2=Runtime.getRuntime().exec(\"rm -r /dirc/Files/keys\");\n" +
+                            "        process2.waitFor();\n"+
                             "        long finishMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();\n" +
                             "        double takenMemory = (finishMemory-startMemory+0.0)/(1024*1024);\n" +
                     "\n" +

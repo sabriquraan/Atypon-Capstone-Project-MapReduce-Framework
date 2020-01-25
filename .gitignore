@@ -36,3 +36,5 @@
 /out/production/MapReduce/System/ReducerManager.class
 /out/production/MapReduce/System/StatusReporter.class
 /out/production/MapReduce/ReducerNode/WriterOutput.class
+/out/production/MapReduce/MapperNode/MapperNode.class
+/out/production/MapReduce/ReducerNode/ReducerNode.class

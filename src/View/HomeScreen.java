@@ -19,6 +19,8 @@ import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 
+import static java.lang.Thread.sleep;
+
 
 public class HomeScreen  implements Screen {
 
@@ -235,7 +237,7 @@ public class HomeScreen  implements Screen {
             }
         }
 
-       if (!Checker.isCorrectMapper(inputs[4],inputs[3])) {
+       if (!Checker.isCorrectMapperFunction(inputs[4],inputs[3])) {
            if (status.getTextFill()==Color.BLUE) {
                status.setText("Syntax Error in Mapper , Enter Correct function of mapper");
                status.setTextFill(Color.RED);
@@ -243,7 +245,7 @@ public class HomeScreen  implements Screen {
                status.setText("Error : check path of input file , number of mappers  , number of reducers and mapper function");
            }
            }
-        if (!Checker.isCorrectReducer(inputs[6],inputs[5])) {
+       if (!Checker.isCorrectReducerFunction(inputs[6],inputs[5])) {
             if (status.getTextFill() == Color.BLUE) {
                 status.setText("Syntax Error in Reducer , Enter Correct function of reducer");
                 status.setTextFill(Color.RED);
@@ -269,18 +271,18 @@ public class HomeScreen  implements Screen {
         StatusReporter.saveTime("Start Processing");
         long startTime = System.currentTimeMillis();
         long startMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-
-        status.setText("Working");
-        status.setTextFill(Color.BLUE);
-
+        setStatus("Working...",Color.BLUE);
         takeInput();
         checkInput();
         if (status.getTextFill()==Color.BLUE)
         MapReduceSystem.start(inputs);
+
+
         long finishTime = System.currentTimeMillis();
         double takenTime = (finishTime-startTime+0.0)/1000;
         long finishMemory = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
         double takenMemory = (finishMemory-startMemory+0.0)/(1024*1024);
+
         StatusReporter.saveTime("Finish Processing");
         StatusReporter.saveMessage("Total time taken:\t"+takenTime+"s");
         StatusReporter.saveMessage("Taken Memory is :\t" + takenMemory + "MB");

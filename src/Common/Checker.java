@@ -31,7 +31,7 @@ public class Checker {
     }
 
 
-    public static boolean isCorrectMapper(String importCode,String mapperFunction) throws IOException, InterruptedException {
+    public static boolean isCorrectMapperFunction(String importCode, String mapperFunction) throws IOException, InterruptedException {
         if (importCode==null || mapperFunction==null)
             return false;
         BufferedWriter writer=new BufferedWriter(new FileWriter("./test.java"));
@@ -161,7 +161,7 @@ public class Checker {
         }
     }
 
-    public static boolean isCorrectReducer(String importCode,String reducerFunction) throws IOException, InterruptedException {
+    public static boolean isCorrectReducerFunction(String importCode, String reducerFunction) throws IOException, InterruptedException {
         if (importCode==null || reducerFunction==null)
             return false;
         BufferedWriter writer=new BufferedWriter(new FileWriter("./test2.java"));

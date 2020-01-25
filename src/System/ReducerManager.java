@@ -38,7 +38,7 @@ public class ReducerManager {
     }
 
 
-    public static void  createReducerFunction(String importCode,String reducerCode) throws IOException {
+    public static void createReducerCode(String importCode, String reducerCode) throws IOException {
 
         if (importCode==null || reducerCode==null)
             return;

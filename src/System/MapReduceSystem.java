@@ -64,8 +64,8 @@ public class MapReduceSystem {
         socket=new ServerSocket(PORT_NUM);
         createDirectories();
         Splitter.splitTextFiles(numOfMapper,filePath);
-        ReducerManager.createReducerFunction(importReducer,reducerFunction);
-        MappersManager.createMappingFunction(importMapper,mapperFunction);
+        ReducerManager.createReducerCode(importReducer,reducerFunction);
+        MappersManager.createMappingCode(importMapper,mapperFunction);
 
     }
 
