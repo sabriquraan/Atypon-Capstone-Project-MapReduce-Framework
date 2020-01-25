@@ -95,27 +95,6 @@ public class MapReduceSystem {
 
     }
 
-    private  void takeInput(String [] inputs){
-        for (String input:inputs)
-            if (input==null) {
-                throw new IllegalArgumentException("Error in inputs\n");
-            }
-            filePath=Paths.get(inputs[0]);
-
-            try {
-                numOfMapper=Integer.parseInt(inputs[1]);
-                numOfReducer=Integer.parseInt(inputs[2]);
-            } catch (NumberFormatException e) {
-                throw new NumberFormatException("Error in number of mappers or reduces\n");
-            }
-            mapperFunction=inputs[3];
-            importMapper=inputs[4];
-            reducerFunction=inputs[5];
-            importReducer=inputs[6];
-
-
-    }
-
 
     public void start() throws IOException, InterruptedException {
 
@@ -172,7 +151,11 @@ public class MapReduceSystem {
 
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "MapReduceSystem{" +
+                "Input File:\t"+filePath+
+                "\nNumber of Mapper:\t"+numOfMapper+
+                "\nNumber of Reducer:\t"+numOfReducer+"\n";
+    }
 }

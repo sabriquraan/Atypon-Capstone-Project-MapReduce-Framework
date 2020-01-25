@@ -67,7 +67,7 @@ public class MapperNode implements Mapper{
         saveTime(mapperNum,"Finish Write Keys");
         saveTime(mapperNum,"Start Shuffling Keys");
 
-        Shuffling.startShuffling(mapperNum,numOfReducer);
+        Shuffler.startShuffling(mapperNum,numOfReducer);
 
         saveTime(mapperNum,"Finish Shuffling Keys");
         saveTime(mapperNum,"send Signal");

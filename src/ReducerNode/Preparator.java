@@ -10,6 +10,9 @@ import java.util.TreeMap;
 
 public class Preparator {
 
+    Preparator(){
+        throw new AssertionError();
+    }
     public static Map<String, List<String>> prepareInput(int reducerNum) throws IOException {
 
 

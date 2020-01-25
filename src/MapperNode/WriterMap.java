@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.util.Map;
 
 public class WriterMap implements Writer {
-
+    WriterMap(){
+        throw new AssertionError();
+    }
     public static void write(Map<?,?> map, BufferedWriter output) throws IOException {
         map.keySet().forEach(k-> {
             try {

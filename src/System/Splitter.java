@@ -12,6 +12,11 @@ import java.nio.file.StandardOpenOption;
 
 public class Splitter {
 
+    private Splitter(){
+
+        throw new AssertionError();
+    }
+
     public  static void splitTextFiles(int numOfMapper,Path bigFile) throws IOException {
 
 

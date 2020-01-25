@@ -9,6 +9,9 @@ import java.util.Date;
 
 public class StatusReporter {
 
+private StatusReporter(){
+    throw new AssertionError();
+    }
 
     public static void saveTime(String message) throws IOException {
         Date date = new Date();

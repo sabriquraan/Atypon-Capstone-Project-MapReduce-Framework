@@ -1,4 +1,5 @@
 import View.HomeScreen;
+import View.Screen;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ public class GUI extends Application {
     @Override
     public void start(Stage primaryStage)  {
 
-        HomeScreen homeScreen = new HomeScreen();
+        Screen homeScreen = new HomeScreen();
         Scene scene = homeScreen.getScreen();
         if (scene==null){
             System.out.println("Error in home screen\n");

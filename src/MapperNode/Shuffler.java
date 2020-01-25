@@ -3,7 +3,7 @@ package MapperNode;
 import java.io.*;
 import java.nio.channels.FileLock;
 
-public class Shuffling {
+public class Shuffler {
 
     public static void startShuffling(int mapperNum,int numOfReducer) throws IOException {
         BufferedWriter writer = null;
