@@ -3,6 +3,7 @@ package View;
 import System.StatusReporter;
 import System.MapReduceSystem;
 import Common.Checker;
+import java.nio.file.Paths;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -179,6 +180,11 @@ public class HomeScreen  implements Screen {
 
         if (!Checker.isFileExist(inputs[0])) {
             status.setText("InValid Path of file , Enter Correct Path of Input File");
+            status.setTextFill(Color.RED);
+        }
+
+        if (!Checker.checkSpace(Paths.get(inputs[0]))){
+            status.setText("No space to save output file");
             status.setTextFill(Color.RED);
         }
 

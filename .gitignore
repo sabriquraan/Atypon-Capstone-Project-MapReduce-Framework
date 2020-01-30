@@ -39,3 +39,4 @@
 /out/production/MapReduce/MapperNode/MapperNode.class
 /out/production/MapReduce/ReducerNode/ReducerNode.class
 /out/production/MapReduce/System/MapReduceSystem$SystemBuilder.class
+/out/production/MapReduce/MapperNode/Shuffler.class

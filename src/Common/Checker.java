@@ -4,8 +4,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class Checker {
+
+    public static boolean checkSpace(Path filePath){
+        File file=new File(String.valueOf(filePath));
+        return file.length() <= Runtime.getRuntime().freeMemory();
+    }
 
     public static boolean isValidNumber(String text){
         if (text==null)
@@ -301,5 +307,7 @@ public class Checker {
             return false;
         }
     }
+
+
 
 }
